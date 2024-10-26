@@ -16,10 +16,10 @@ PASSWORD = os.getenv('BOT_PASSWORD')
 # Build the YouTube API client
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
-# Request channel details
+# Request channel details using forHandle
 request = youtube.channels().list(
     part='snippet,contentDetails,statistics',
-    forUsername=CHANNEL_USERNAME  # Use 'forUsername' to fetch by username
+    forHandle=CHANNEL_USERNAME  # Use 'forHandle' to fetch by handle
 )
 response = request.execute()
 
@@ -53,9 +53,6 @@ if view_count:
 
 # End the sentence
 auto_generated_paragraph += "."
-
-# Print or use the auto_generated_paragraph in your script as needed
-print(auto_generated_paragraph)
 
 # Format the content for the MediaWiki page
 marker_comment = """<!--
