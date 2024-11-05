@@ -13,7 +13,7 @@ WIKI_URL = os.getenv('WIKI_URL')
 USERNAME = os.getenv('BOT_USERNAME')
 PASSWORD = os.getenv('BOT_PASSWORD')
 
-# Fetch the list of channels to update from the specified wiki page
+# Fetch the list of channels to update from the selected wiki page
 CHANNELS_TO_UPDATE = fetch_channels_needing_updates(WIKI_URL, 'User:YouTubeWikiBot/Filters/Channel Update Requests', USERNAME, PASSWORD)
 
 # Initialize YouTube client
