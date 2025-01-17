@@ -6,6 +6,7 @@ import re  # Importing the regular expressions module
 
 load_dotenv()
 WIKI_URL = os.getenv('WIKI_URL')
+WIKI_PATH = os.getenv('WIKI_PATH')
 
 def get_full_country_name(country_code):
     """Retrieve the full country name from the country code."""
@@ -14,15 +15,15 @@ def get_full_country_name(country_code):
     except LookupError:
         return ''
 
-def fetch_boilerplate(page_title, wiki_url):
+def fetch_boilerplate(page_title, wiki_url, wiki_path):
     """Fetch the boilerplate content from the MediaWiki page using mwclient."""
-    site = mwclient.Site(wiki_url) 
+    site = mwclient.Site(wiki_url, path=wiki_path) 
 
     # Fetch the page
     page = site.pages[page_title]
     
     if page.exists:
-        content = page.text
+        content = page.text()
         # Remove content within <noinclude> tags
         content_without_noinclude = re.sub(r'<noinclude>.*?</noinclude>', '', content, flags=re.DOTALL)
         return content_without_noinclude.strip()  # Return cleaned content
@@ -49,7 +50,7 @@ def generate_auto_paragraph(channel_info, join_date, statistics):
 
 def generate_wiki_content(channel_info, username, join_date, statistics):
     """Generates the content for the MediaWiki page."""
-    boilerplate = fetch_boilerplate("YouTube Wiki:Channel page boilerplate", WIKI_URL)
+    boilerplate = fetch_boilerplate("YouTube Wiki:Channel page boilerplate", WIKI_URL, WIKI_PATH)
     
     auto_paragraph = generate_auto_paragraph(channel_info, join_date, statistics)
     
