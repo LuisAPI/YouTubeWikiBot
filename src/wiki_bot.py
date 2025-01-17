@@ -2,9 +2,9 @@
 
 import mwclient
 
-def connect_to_wiki(wiki_url, username, password):
+def connect_to_wiki(wiki_url, wiki_path, username, password):
     """Connects to the MediaWiki site."""
-    site = mwclient.Site(wiki_url, path='/')
+    site = mwclient.Site(wiki_url, path=wiki_path)
     site.login(username, password)
     return site
 
@@ -19,11 +19,8 @@ def check_page_exists(site, page_title):
     page = site.pages[page_title]
     return page.exists, page.text()
 
-def fetch_channels_needing_updates(wiki_url, page_title, username, password):
-    # Connect to the MediaWiki site
-    site = mwclient.Site(wiki_url, path='/')
-    site.login(username, password)
-    
+def fetch_channels_needing_updates(site, page_title):
+    """Fetches the list of channels needing updates from the specified wiki page."""
     # Access the specified page
     page = site.pages[page_title]
     content = page.text()

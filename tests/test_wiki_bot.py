@@ -9,6 +9,7 @@ import os
 # Load environment variables
 load_dotenv()
 TEST_WIKI_URL = os.getenv('TEST_WIKI_URL')
+TEST_WIKI_PATH = os.getenv('TEST_WIKI_PATH')
 TEST_USERNAME = os.getenv('TEST_USERNAME')
 TEST_PASSWORD = os.getenv('TEST_PASSWORD')
 
@@ -24,10 +25,10 @@ def test_connect_to_wiki(mock_site):
     mock_site.login.return_value = True  # Mock successful login
 
     # Call the function with test settings
-    site = connect_to_wiki(TEST_WIKI_URL, TEST_USERNAME, TEST_PASSWORD)
+    site = connect_to_wiki(TEST_WIKI_URL, TEST_WIKI_PATH, TEST_USERNAME, TEST_PASSWORD)
 
     # Assertions
-    mock_site.assert_called_once_with(TEST_WIKI_URL, path='/')
+    mock_site.assert_called_once_with(TEST_WIKI_URL, path=TEST_WIKI_PATH)
     mock_site.login.assert_called_once_with(TEST_USERNAME, TEST_PASSWORD)
     assert site == mock_site
 
@@ -87,7 +88,7 @@ def test_fetch_channels_needing_updates_various(mock_site, page_text, expected_c
     mock_site.pages.__getitem__.return_value = mock_page  # Mock accessing the page
 
     # Call the function
-    channels = fetch_channels_needing_updates(TEST_WIKI_URL, 'Channel Update Requests', TEST_USERNAME, TEST_PASSWORD)
+    channels = fetch_channels_needing_updates(mock_site, 'Channel Update Requests')
 
     # Assertions
     mock_site.pages.__getitem__.assert_called_once_with('Channel Update Requests')
