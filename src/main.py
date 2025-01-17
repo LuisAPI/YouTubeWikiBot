@@ -10,17 +10,19 @@ from utils import generate_auto_paragraph, generate_wiki_content, combine_conten
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
 WIKI_URL = os.getenv('WIKI_URL')
+WIKI_PATH = os.getenv('WIKI_PATH')
 USERNAME = os.getenv('BOT_USERNAME')
 PASSWORD = os.getenv('BOT_PASSWORD')
+CHANNELS_PAGE_TITLE = os.getenv('CHANNELS_PAGE_TITLE')
+
+# Connect to MediaWiki
+site = connect_to_wiki(WIKI_URL, WIKI_PATH, USERNAME, PASSWORD)
 
 # Fetch the list of channels to update from the selected wiki page
-CHANNELS_TO_UPDATE = fetch_channels_needing_updates(WIKI_URL, 'User:YouTubeWikiBot/Filters/Channel Update Requests', USERNAME, PASSWORD)
+CHANNELS_TO_UPDATE = fetch_channels_needing_updates(site, CHANNELS_PAGE_TITLE)
 
 # Initialize YouTube client
 youtube = get_youtube_client(API_KEY)
-
-# Connect to MediaWiki
-site = connect_to_wiki(WIKI_URL, USERNAME, PASSWORD)
 
 # Iterate over each channel to update
 for channel_handle in CHANNELS_TO_UPDATE:
