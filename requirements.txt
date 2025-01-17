@@ -2,3 +2,5 @@ google-api-python-client
 python-dotenv
 mwclient
 pycountry
+pytest
+setuptools
