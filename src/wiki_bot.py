@@ -1,6 +1,7 @@
 # wiki_bot.py
 
 import mwclient
+import re
 
 def connect_to_wiki(wiki_url, wiki_path, username, password):
     """Connects to the MediaWiki site."""
@@ -21,20 +22,14 @@ def check_page_exists(site, page_title):
 
 def fetch_channels_needing_updates(site, page_title):
     """Fetches the list of channels needing updates from the specified wiki page."""
-    # Access the specified page
     page = site.pages[page_title]
     content = page.text()
-    
-    # Parse the content to find channels (assumes a simple list format)
+
     channels = []
-    lines = content.splitlines()
-    for line in lines:
-        if line.startswith('*'):
-            # Extract the channel handle from the line
-            channel_info = line.split('(')
-            if len(channel_info) > 1:
-                # Get the handle without "Handle: " label
-                channel_handle = channel_info[1].replace('Handle: ', '').strip(') ')
-                channels.append(channel_handle)
-    
+    for line in content.splitlines():
+        if line.lstrip().startswith('*'):
+            match = re.search(r'@[^\s)]+', line)
+            if match:
+                channels.append(match.group(0))
+
     return channels
