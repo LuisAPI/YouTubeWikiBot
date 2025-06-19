@@ -10,7 +10,7 @@ def read_requirements():
 
 # Load environment variables
 load_dotenv()
-AUTHOR_EMAIL = os.getenv('AUTHOR_EMAIL')
+AUTHOR_EMAIL = os.getenv('AUTHOR_EMAIL', "default@example.com")
 
 setup(
     name='YouTubeWikiBot',
