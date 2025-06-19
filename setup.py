@@ -4,12 +4,13 @@ from dotenv import load_dotenv
 import os
 
 def read_requirements():
-    with open('requirements.txt') as f:
+    req_path = os.path.join(os.path.dirname(__file__), "requirements.txt")
+    with open(req_path) as f:
         return f.read().splitlines()
 
 # Load environment variables
 load_dotenv()
-AUTHOR_EMAIL = os.getenv('AUTHOR_EMAIL')
+AUTHOR_EMAIL = os.getenv('AUTHOR_EMAIL', "default@example.com")
 
 setup(
     name='YouTubeWikiBot',
