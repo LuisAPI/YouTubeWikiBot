@@ -14,7 +14,7 @@ AUTHOR_EMAIL = os.getenv('AUTHOR_EMAIL', "default@example.com")
 
 setup(
     name='YouTubeWikiBot',
-    version='0.1',
+    version='0.1.1',
     author='Luis Imperial',
     author_email=AUTHOR_EMAIL,
     description='A bot to create a database of the most popular creators on YouTube.',

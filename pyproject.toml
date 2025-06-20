@@ -1,7 +1,25 @@
-[build-system]
-requires = [
-    "setuptools>=40.8.0",
-    "wheel",
-    "python-dotenv"
+[project]
+name = "youtubewikibot"
+version = "0.1.1"
+description = "A bot to create a database of the most popular creators on YouTube."
+authors = [
+    {name = "Luis Imperial",email = "imperialluisanton@outlook.ph"}
 ]
-build-backend = "setuptools.build_meta"
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "google-api-python-client (>=2.173.0,<3.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "mwclient (>=0.11.0,<0.12.0)",
+    "pycountry (>=24.6.1,<25.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+
